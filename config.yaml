@@ -1,1 +1,7 @@
 GIN_MODE: release
+
+MySQL:
+  User: root
+  Password: root
+  DBname: test_data
+  Addr: 127.0.0.1:3306
