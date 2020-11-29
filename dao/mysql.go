@@ -14,5 +14,6 @@ func NewShorturl() Shorturl {
 }
 
 func (s *Shorturl) Create(req ShortenReq) (*ShortenResp, error) {
+
 	return nil, nil
 }
