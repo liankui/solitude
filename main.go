@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/liankui/solitude/cmd/service"
+	"github.com/liankui/solitude/handler"
 	"log"
 )
 
@@ -11,7 +11,7 @@ func main() {
 	flag.Parse()
 	log.Println("configPath:", *configPath)
 
-	var h service.HttpServer
+	var h handler.HttpServer
 	r := h.InitRouter()
 	r.Run()
 }
