@@ -10,7 +10,8 @@ type HttpServer struct {}
 func (h *HttpServer) InitRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/shorturl", logic.Shorturl)
+	r.GET("/shorten", logic.Shorten)
+	r.GET("/expand", logic.Expand)
 
 	return r
 }

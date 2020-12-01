@@ -13,6 +13,9 @@ func NewShorturl() Shorturl {
 	return Shorturl{}
 }
 
-func (s *Shorturl) Insert(req ShortenReq) (*ShortenResp, error) {
-	return nil, nil
+func (s *Shorturl) Insert(url, shorten string) (Shorturl, error) {
+	s.Url = url
+	s.Shorten = shorten
+	err := DB.TestDate.Create(&s).Error
+	return *s, err
 }
