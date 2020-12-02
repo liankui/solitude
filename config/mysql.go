@@ -27,6 +27,7 @@ func openDB(user, pass, addr, dbname string) *gorm.DB {
 	if err != nil {
 		log.Fatalf("Database:%s connection error: %v", dbname, err)
 	}
+
 	return db
 }
 

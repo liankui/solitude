@@ -1,4 +1,5 @@
 GIN_MODE: debug
+Addr: 5555
 
 MySQL:
   User: root

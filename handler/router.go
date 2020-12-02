@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/liankui/solitude/logic"
+	"github.com/spf13/viper"
 	"log"
 )
 
@@ -14,7 +15,7 @@ func (h *HttpServer) InitRouter() {
 	r.GET("/shorten", logic.Shorten)
 	r.GET("/expand", logic.Expand)
 
-	err := r.Run(":5555")
+	err := r.Run(":"+viper.GetString("Addr"))
 	if err != nil {
 		log.Fatalf("router running error: %v", err)
 	}
