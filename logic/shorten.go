@@ -35,10 +35,10 @@ func RandStringRunes(n int) string {
 }
 
 func Expand(c *gin.Context) {
-	url := c.Query("url")
+	data, _ := dao.FindTestData()
 
 	c.JSON(200, gin.H{
-		"message": url,
+		"message": data,
 	})
 }
 
