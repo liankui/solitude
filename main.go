@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/gin-gonic/gin"
 	"github.com/liankui/solitude/config"
+	"github.com/liankui/solitude/dao"
 	"github.com/liankui/solitude/handler"
 	"github.com/spf13/viper"
 )
@@ -15,7 +16,7 @@ func main() {
 	gin.SetMode(viper.GetString("GIN_MODE"))
 
 	config.InitCfg(*configPath)
-	config.DB.InitDB()
+	dao.DB.InitDB()
 
 	var h handler.HttpServer
 	h.InitRouter()

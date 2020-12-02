@@ -2,7 +2,6 @@ package dao
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/liankui/solitude/config"
 	"time"
 )
 
@@ -13,6 +12,10 @@ type Shorturl struct {
 	Shorten string `json:"shorten"`
 }
 
+func (Shorturl) TableName() string {
+	return "shorturl"
+}
+
 func NewShorturl() Shorturl {
 	return Shorturl{}
 }
@@ -20,7 +23,7 @@ func NewShorturl() Shorturl {
 func (s *Shorturl) Insert(url, shorten string) (Shorturl, error) {
 	s.Url = url
 	s.Shorten = shorten
-	err := config.DB.TestDate.Create(&s).Error
+	err := DB.TestDate.Create(&s).Error
 	return *s, err
 }
 
@@ -31,6 +34,6 @@ type TestTable struct {
 
 func FindTestData() ([]TestTable, error) {
 	var t []TestTable
-	err := config.DB.TestDate.Table("test_table").Find(&t).Error
+	err := DB.TestDate.Table("test_table").Find(&t).Error
 	return t, err
 }
