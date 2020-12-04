@@ -23,7 +23,7 @@ func NewShorturl() Shorturl {
 func (s *Shorturl) Insert(url, shorten string) (Shorturl, error) {
 	s.Url = url
 	s.Shorten = shorten
-	err := DB.TestDate.Create(&s).Error
+	err := DB.TestDate.Table(s.TableName()).Create(&s).Error
 	return *s, err
 }
 
