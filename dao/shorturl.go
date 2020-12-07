@@ -20,11 +20,11 @@ func NewShorturl() Shorturl {
 	return Shorturl{}
 }
 
-func (s *Shorturl) Insert(url, shorten string) (Shorturl, error) {
+func (s *Shorturl) Insert(url, shorten string) error {
 	s.Url = url
 	s.Shorten = shorten
 	err := DB.TestDate.Table(s.TableName()).Create(&s).Error
-	return *s, err
+	return err
 }
 
 type TestTable struct {
