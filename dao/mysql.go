@@ -63,5 +63,4 @@ func (db *DataBase) InitDB() {
 	DB = &DataBase{
 		TestDate: InitTestDB(),
 	}
-
 }

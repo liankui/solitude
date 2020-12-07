@@ -6,3 +6,10 @@ MySQL:
   Password: root
   DBname: test_data
   Addr: 127.0.0.1:3306
+Reids:
+  Host: 127.0.0.1:6379
+  Password:
+  DB: 0  # use default DB
+  MaxIdle: 30
+  MaxActive: 30
+  IdleTimeout: 200

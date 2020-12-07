@@ -21,6 +21,8 @@ func Shorten(c *gin.Context) {
 		return
 	}
 
+	// 存入缓存中，保质期3天
+
 	c.JSON(200, gin.H{
 		"message": shorten,
 	})

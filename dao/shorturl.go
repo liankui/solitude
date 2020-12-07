@@ -2,7 +2,6 @@ package dao
 
 import (
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 // shorturl
@@ -27,13 +26,8 @@ func (s *Shorturl) Insert(url, shorten string) error {
 	return err
 }
 
-type TestTable struct {
-	ID int `json:"id"`
-	StartDate time.Time `json:"start_date"`
-}
-
-func FindTestData() ([]TestTable, error) {
-	var t []TestTable
-	err := DB.TestDate.Table("test_table").Find(&t).Error
-	return t, err
+// redis----------
+func (s *Shorturl) InsertRedis(url, shorten string) error {
+	err := Redis.HSet("shorturl", shorten, url).Err()
+	return err
 }

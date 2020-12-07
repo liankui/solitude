@@ -17,6 +17,7 @@ func main() {
 
 	config.InitCfg(*configPath)
 	dao.DB.InitDB()
+	dao.NewRedis()
 
 	var h handler.HttpServer
 	h.InitRouter()
