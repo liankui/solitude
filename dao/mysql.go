@@ -11,11 +11,7 @@ import (
 	"time"
 )
 
-var DB *DataBase
-
-type DataBase struct {
-	TestDate *gorm.DB
-}
+var DB *gorm.DB
 
 func openDB(user, pass, addr, dbname string) *gorm.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, pass, addr, dbname)
@@ -23,9 +19,9 @@ func openDB(user, pass, addr, dbname string) *gorm.DB {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
-			SlowThreshold: time.Second,   // 慢 SQL 阈值
+			SlowThreshold: time.Second, // 慢 SQL 阈值
 			LogLevel:      logger.Info, // Log level
-			Colorful:      true,         // 禁用彩色打印
+			Colorful:      true,        // 禁用彩色打印
 		},
 	)
 
@@ -52,15 +48,9 @@ func openDB(user, pass, addr, dbname string) *gorm.DB {
 
 func InitTestDB() *gorm.DB {
 	return openDB(
-		viper.GetString("MySQl.User"),
-		viper.GetString("MySQl.Password"),
-		viper.GetString("MySQl.Addr"),
-		viper.GetString("MySQl.DBname"),
+		viper.GetString("MySQL.User"),
+		viper.GetString("MySQL.Password"),
+		viper.GetString("MySQL.Addr"),
+		viper.GetString("MySQL.DBname"),
 	)
-}
-
-func (db *DataBase) InitDB() {
-	DB = &DataBase{
-		TestDate: InitTestDB(),
-	}
 }

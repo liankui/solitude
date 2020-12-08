@@ -5,36 +5,36 @@ import (
 	"github.com/liankui/solitude/dao"
 	"math/rand"
 	"net/http"
+	"time"
 )
 
 func Shorten(c *gin.Context) {
 	url := c.Query("url")
-	shorten := RandStringRunes(5)
+	shorten := RandStringRunes(6)
 
 	// 持久化到mysql，存入redis中，返回给调用者短链
 	s := dao.NewShorturl()
-	err := s.Insert(url, shorten)
+	str, err := s.Insert(url, shorten)
 	if err != nil {
 		c.JSON(500, gin.H{
-			"message": "insert error" + err.Error(),
+			"message": "insert mysql error" + err.Error(),
 		})
 		return
 	}
 
-	// 存入缓存中，保质期3天
-
 	c.JSON(200, gin.H{
-		"message": shorten,
+		"message": str,
 	})
 }
 
-var letterRunes = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_")
+var letterRunes = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 
 func RandStringRunes(n int) string {
+	rand.Seed(time.Now().UnixNano())
+
 	b := make([]rune, n)
-	l := len(letterRunes)
 	for i := range b {
-		b[i] = letterRunes[rand.Intn(l)]
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
 	}
 	return string(b)
 }

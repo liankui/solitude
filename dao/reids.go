@@ -27,5 +27,5 @@ func NewRedis() *redis.Client {
 		viper.GetString("Redis.Host"),
 		viper.GetString("Redis.Password"),
 		viper.GetInt("Redis.DB"),
-		)
+	)
 }

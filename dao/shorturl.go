@@ -19,15 +19,33 @@ func NewShorturl() Shorturl {
 	return Shorturl{}
 }
 
-func (s *Shorturl) Insert(url, shorten string) error {
-	s.Url = url
-	s.Shorten = shorten
-	err := DB.TestDate.Table(s.TableName()).Create(&s).Error
-	return err
+func (s *Shorturl) Insert(url, shorten string) (string, error) {
+
+	tx := DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+	if err := tx.Error; err != nil {
+		return "", err
+	}
+
+	tx.Where("url = ?", url).Last(&s)
+
+	if s.ID == 0 {
+		s.Url = url
+		s.Shorten = shorten
+		if err := tx.Table(s.TableName()).Create(&s).Error; err != nil {
+			tx.Rollback()
+			return "", err
+		}
+		if err := Redis.HSet("shorturl", shorten, url).Err(); err != nil {
+			tx.Rollback()
+			return "", err
+		}
+	}
+
+	return s.Shorten, tx.Commit().Error
 }
 
-// redis----------
-func (s *Shorturl) InsertRedis(url, shorten string) error {
-	err := Redis.HSet("shorturl", shorten, url).Err()
-	return err
-}

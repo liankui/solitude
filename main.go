@@ -12,12 +12,11 @@ import (
 func main() {
 	configPath := flag.String("c", "config.yaml", "configuration file")
 	flag.Parse()
-
 	gin.SetMode(viper.GetString("GIN_MODE"))
 
 	config.InitCfg(*configPath)
-	dao.DB.InitDB()
-	dao.NewRedis()
+	dao.DB = dao.InitTestDB()
+	dao.Redis = dao.NewRedis()
 
 	var h handler.HttpServer
 	h.InitRouter()
