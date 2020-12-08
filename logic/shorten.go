@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/liankui/solitude/dao"
 	"math/rand"
+	"net/http"
 	"time"
 )
 
@@ -49,8 +50,8 @@ func Expand(c *gin.Context) {
 		})
 		return
 	}
-	c.String(200, getUrl)
-	//c.Redirect(http.StatusMovedPermanently, getUrl)
+	//c.String(200, getUrl)
+	c.Redirect(http.StatusMovedPermanently, getUrl)
 }
 
 

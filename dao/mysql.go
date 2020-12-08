@@ -13,8 +13,8 @@ import (
 
 var DB *gorm.DB
 
-func openDB(user, pass, addr, dbname string) *gorm.DB {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, pass, addr, dbname)
+func openDB(user, pass, host, dbname string) *gorm.DB {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, pass, host, dbname)
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -50,7 +50,7 @@ func InitTestDB() *gorm.DB {
 	return openDB(
 		viper.GetString("MySQL.User"),
 		viper.GetString("MySQL.Password"),
-		viper.GetString("MySQL.Addr"),
+		viper.GetString("MySQL.Host"),
 		viper.GetString("MySQL.DBname"),
 	)
 }

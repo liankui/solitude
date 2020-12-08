@@ -1,11 +1,11 @@
 GIN_MODE: debug
-Addr: 5555
+Addr: 5555 # 端口号
 
 MySQL:
   User: root
   Password: root
+  Host: 127.0.0.1:3306
   DBname: test_data
-  Addr: 127.0.0.1:3306
 Reids:
   Host: 127.0.0.1:6379
   Password:
