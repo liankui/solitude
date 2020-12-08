@@ -45,7 +45,7 @@ func Expand(c *gin.Context) {
 	getUrl, err := s.GetUrl(shorten)
 	if err != nil {
 		c.JSON(500, gin.H{
-			"message": "get url error" + err.Error(),
+			"message": "get url error: " + err.Error(),
 		})
 		return
 	}

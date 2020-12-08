@@ -61,13 +61,24 @@ func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
 
 func (s *Shorturl) GetUrl(shorten string) (string, error) {
 	hGet, _ := Redis.HGet("longurl", shorten).Result()
-	if hGet == "" {
-		err := DB.Where("shorten = ?", shorten).Last(&s).Error
-		if err != nil {
-			return "", err
-		}
-		return s.Url, nil
-	} else {
+	if hGet != "" {
 		return hGet, nil
 	}
+
+	err := DB.Where("shorten = ?", shorten).Last(&s).Error
+	if err != nil {
+		return "", err
+	}
+
+	// redis中无数据，mysql中有数据，再存一份进redis中
+	if s.ID > 0 {
+		if err := Redis.HSet("shorturl", s.Url, s.Shorten).Err(); err != nil {
+			return "", err
+		}
+		if err := Redis.HSet("longurl", s.Shorten, s.Url).Err(); err != nil {
+			return "", err
+		}
+	}
+
+	return s.Url, nil
 }
