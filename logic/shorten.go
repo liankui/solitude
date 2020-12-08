@@ -14,7 +14,7 @@ func Shorten(c *gin.Context) {
 
 	// 持久化到mysql，存入redis中，返回给调用者短链
 	s := dao.NewShorturl()
-	str, err := s.Insert(url, shorten)
+	str, err := s.GetShorten(url, shorten)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": "insert mysql error" + err.Error(),

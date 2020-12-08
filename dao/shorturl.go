@@ -19,8 +19,7 @@ func NewShorturl() Shorturl {
 	return Shorturl{}
 }
 
-func (s *Shorturl) Insert(url, shorten string) (string, error) {
-
+func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
 	tx := DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -31,7 +30,13 @@ func (s *Shorturl) Insert(url, shorten string) (string, error) {
 		return "", err
 	}
 
-	tx.Where("url = ?", url).Last(&s)
+	// 先从redis里查，如果没有则从mysql中查。如果都没有则存mysql和redis
+	hGet, _ := Redis.HGet("longurl", url).Result()
+	if hGet == "" {
+		tx.Where("url = ?", url).Last(&s)
+	} else {
+		return hGet, nil
+	}
 
 	if s.ID == 0 {
 		s.Url = url
@@ -41,6 +46,10 @@ func (s *Shorturl) Insert(url, shorten string) (string, error) {
 			return "", err
 		}
 		if err := Redis.HSet("shorturl", shorten, url).Err(); err != nil {
+			tx.Rollback()
+			return "", err
+		}
+		if err := Redis.HSet("longurl", url, shorten).Err(); err != nil {
 			tx.Rollback()
 			return "", err
 		}
