@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/liankui/solitude/dao"
 	"math/rand"
-	"net/http"
 	"time"
 )
 
@@ -40,13 +39,18 @@ func RandStringRunes(n int) string {
 }
 
 func Expand(c *gin.Context) {
-	url := c.Param("url")
+	shorten := c.Param("shorten")
 	// 使用者访问短链，查短链映射长链，并重定向至长链
-
-	c.Redirect(http.StatusMovedPermanently, url)
-	c.JSON(200, gin.H{
-		"message": url,
-	})
+	s := dao.NewShorturl()
+	getUrl, err := s.GetUrl(shorten)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "get url error" + err.Error(),
+		})
+		return
+	}
+	c.String(200, getUrl)
+	//c.Redirect(http.StatusMovedPermanently, getUrl)
 }
 
 

@@ -13,7 +13,7 @@ func (h *HttpServer) InitRouter() {
 	r := gin.Default()
 
 	r.GET("/shorten", logic.Shorten)
-	r.GET("/expand", logic.Expand)
+	r.GET("/expand/:shorten", logic.Expand)
 
 	err := r.Run(":"+viper.GetString("Addr"))
 	if err != nil {

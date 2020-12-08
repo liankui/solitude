@@ -20,6 +20,12 @@ func NewShorturl() Shorturl {
 }
 
 func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
+	// 先从redis里查，如果没有则从mysql中查。如果都没有则存mysql和redis
+	hGet, _ := Redis.HGet("longurl", url).Result()
+	if hGet != "" {
+		return hGet, nil
+	}
+
 	tx := DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -30,13 +36,7 @@ func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
 		return "", err
 	}
 
-	// 先从redis里查，如果没有则从mysql中查。如果都没有则存mysql和redis
-	hGet, _ := Redis.HGet("longurl", url).Result()
-	if hGet == "" {
-		tx.Where("url = ?", url).Last(&s)
-	} else {
-		return hGet, nil
-	}
+	DB.Where("url = ?", url).Last(&s)
 
 	if s.ID == 0 {
 		s.Url = url
@@ -45,16 +45,29 @@ func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
 			tx.Rollback()
 			return "", err
 		}
-		if err := Redis.HSet("shorturl", shorten, url).Err(); err != nil {
-			tx.Rollback()
-			return "", err
-		}
-		if err := Redis.HSet("longurl", url, shorten).Err(); err != nil {
-			tx.Rollback()
-			return "", err
-		}
+	}
+
+	if err := Redis.HSet("shorturl", url, s.Shorten).Err(); err != nil {
+		tx.Rollback()
+		return "", err
+	}
+	if err := Redis.HSet("longurl", s.Shorten, url).Err(); err != nil {
+		tx.Rollback()
+		return "", err
 	}
 
 	return s.Shorten, tx.Commit().Error
 }
 
+func (s *Shorturl) GetUrl(shorten string) (string, error) {
+	hGet, _ := Redis.HGet("longurl", shorten).Result()
+	if hGet == "" {
+		err := DB.Where("shorten = ?", shorten).Last(&s).Error
+		if err != nil {
+			return "", err
+		}
+		return s.Url, nil
+	} else {
+		return hGet, nil
+	}
+}
