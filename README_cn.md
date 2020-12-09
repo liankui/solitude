@@ -25,7 +25,7 @@ solitude 这是一个长链转化为短链，支持短链跳转，并提供了�
 
 ## 参数配置
 Web设置、MySQL设置、Redis设置
-
+使用shorturl.sql中的sql创建表
 配置如下
 ```yaml
 GIN_MODE: debug

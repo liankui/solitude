@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for shorturl
 -- ----------------------------
-DROP TABLE IF EXISTS `shorturl`;
+# DROP TABLE IF EXISTS `shorturl`;
 CREATE TABLE `shorturl` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

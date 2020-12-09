@@ -26,6 +26,8 @@ supports short url jump to long url, and provides data caching and persistence.
 ```
 
 ## Config
+need MySQL,Redis  
+use shorturl.sql create database.table
 ```yaml
 GIN_MODE: debug
 Addr: 5555 
