@@ -50,4 +50,5 @@ Redis:
 
 3.拼接url:在浏览器中访问短链`localhost:5555/expand/eexrTL`，结果为跳转到对应长链，DONE！
 
-
+## 接口逻辑
+![image](image.png)
