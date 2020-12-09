@@ -28,7 +28,7 @@ supports short url jump to long url, and provides data caching and persistence.
 ## Config
 ```yaml
 GIN_MODE: debug
-Addr: 5555 # 端口号
+Addr: 5555 
 
 MySQL:
   User: root
