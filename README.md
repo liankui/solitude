@@ -1,8 +1,10 @@
 # solitude
-solitude 这是一个长链转化为短链，支持短链跳转，并提供了数据的缓存和持久化的项目。
+Solitude is a project that converts long url into short url,  
+supports short url jump to long url, and provides data caching and persistence.
 
+[中文版README](README_cn.md)
 
-## 项目结构
+## Project Structure
 ```
 .
 ├── LICENSE
@@ -23,10 +25,7 @@ solitude 这是一个长链转化为短链，支持短链跳转，并提供了�
 └── main.go
 ```
 
-## 参数配置
-Web设置、MySQL设置、Redis设置
-
-配置如下
+## Config
 ```yaml
 GIN_MODE: debug
 Addr: 5555 # 端口号
@@ -42,13 +41,13 @@ Redis:
   DB: 0  # use default DB
 ```
 
-## 使用方式
-1.进入项目目录，使用命令`go run main.go`启动项目
+## Get Started
+1.Enter the project directory and use the command `go run main.go` to start the project.
 
-2.设置短链:在浏览器中访问`localhost:5555/shorten?url=https://news.cctv.com/2020/12/08/ARTItP6OrqV93zTT8kxMqKl2201208.shtml?spm=C94212.P4YnMod9m2uD.EfOoEZcMXuiv.9`
-得到以下信息{"message":"eexrTL"}
+2.Set up short url. Visit this in the browser: `localhost:5555/shorten?url=https://news.cctv.com/2020/12/08/ARTItP6OrqV93zTT8kxMqKl2201208.shtml?spm=C94212.P4YnMod9m2uD.EfOoEZcMXuiv.9`
+Get the following information like this: {"message":"eexrTL"}
 
-3.拼接url:在浏览器中访问短链`localhost:5555/expand/eexrTL`，结果为跳转到对应长链，DONE！
+3.Splicing url. Access the short link in the browser: `localhost:5555/expand/eexrTL`, and the result is a jump to the corresponding long link, DONE!
 
-## 接口逻辑
+## Logic
 ![image](image.png)
