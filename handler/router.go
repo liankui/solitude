@@ -14,6 +14,11 @@ func (h *HttpServer) InitRouter() {
 
 	r.GET("/shorten", logic.Shorten)
 	r.GET("/expand/:shorten", logic.Expand)
+	r.GET("/print", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "hello world1",
+		})
+	})
 
 	err := r.Run(":"+viper.GetString("Addr"))
 	if err != nil {

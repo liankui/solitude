@@ -21,7 +21,7 @@ func NewShorturl() Shorturl {
 
 func (s *Shorturl) GetShorten(url, shorten string) (string, error) {
 	// 先从redis里查，如果没有则从mysql中查。如果都没有则存mysql和redis
-	hGet, _ := Redis.HGet("longurl", url).Result()
+	hGet, _ := Redis.HGet("shorturl", url).Result()
 	if hGet != "" {
 		return hGet, nil
 	}

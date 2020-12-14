@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    image: golang:latest
+    container_name: golang-demo
+    volumes:
+      - $GOPATH/src/github.com/liankui/solitude:/go/src
+    ports:
+      - "5555:5555"
+#    network_mode: "host"
+    working_dir: /go/src
+    command: go run main.go
+#  redis:
+#    image: redis
