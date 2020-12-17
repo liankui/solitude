@@ -8,8 +8,8 @@ services:
     ports:
       - "5555:5555"
 #    network_mode: "host"
-    networks:
-      - testnet
+#    networks:
+#      - testnet
     working_dir: /go/src
     command: go run main.go
 #  redis:

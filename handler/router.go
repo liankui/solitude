@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/liankui/solitude/dao"
 	"github.com/liankui/solitude/logic"
 	"github.com/spf13/viper"
 	"log"
@@ -15,8 +16,9 @@ func (h *HttpServer) InitRouter() {
 	r.GET("/shorten", logic.Shorten)
 	r.GET("/expand/:shorten", logic.Expand)
 	r.GET("/print", func(c *gin.Context) {
+		shorturl := dao.Print()
 		c.JSON(200, gin.H{
-			"message": "hello world1",
+			"message": shorturl,
 		})
 	})
 

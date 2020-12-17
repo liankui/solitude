@@ -4,10 +4,10 @@ Addr: 5555 # 端口号
 MySQL:
   User: root
   Password: root
-  Host: 192.168.1.5:3306
+  Host: 192.168.9.60:3306
   DBname: test_data
 Reids:
-  Host: 192.168.1.5:6379
+  Host: 192.168.9.60:6379
   Password:
   DB: 0  # use default DB
 
