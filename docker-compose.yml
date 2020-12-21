@@ -13,14 +13,13 @@ services:
     working_dir: /go/src
     command: go run main.go
   redis:
-    image: redis:v3
+    image: redis:v7
     container_name: redis-demo
     ports:
       - 6379:6379
     #定义挂载点
     volumes:
       - /usr/local/etc/redis/data:/data
-      - /usr/local/etc/redis/redis.conf:/usr/local/etc/redis/
     command: redis-server /usr/local/etc/redis/redis.conf
     #环境变量
     privileged: true
