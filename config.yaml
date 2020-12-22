@@ -6,8 +6,8 @@ MySQL:
   Password: root
   Host: 192.168.9.60:3306  # 替换为宿主机内网ip
   DBname: test_data
-Reids:
-  Host: 172.21.0.1:6379
+Redis:
+  Host: redis:6379
   Password:
   DB: 0  # use default DB
 
