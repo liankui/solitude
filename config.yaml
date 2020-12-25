@@ -4,7 +4,7 @@ Addr: 5555 # 端口号
 MySQL:
   User: root
   Password: root
-  Host: 192.168.9.60:13306  # 替换为宿主机内网ip
+  Host: 192.168.9.60:13306 // 宿主机ip todo 为什么要用宿主机的ip
   DBname: test_data
 Redis:
   Host: 192.168.9.60:16379
