@@ -15,6 +15,7 @@ func (Shorturl) TableName() string {
 	return "shorturl"
 }
 
+
 func NewShorturl() Shorturl {
 	return Shorturl{}
 }
