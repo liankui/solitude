@@ -9,6 +9,17 @@ import (
 	"github.com/spf13/viper"
 )
 
+// @title Solitude
+// @version 1.0
+// @description 一个golang开发的短链接项目
+// @termsOfService https://github.com/liankui/solitude
+
+// @contact.name Eric
+// @contact.url https://github.com/liankui
+// @contact.email
+
+// @host localhost:5555
+// @BasePath
 func main() {
 	configPath := flag.String("c", "config.yaml", "configuration file")
 	flag.Parse()

@@ -4,10 +4,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/liankui/solitude/dao"
 	"math/rand"
-	"net/http"
 	"time"
 )
 
+// Shorten godoc
+// @Summary 返回短链
+// @Description 使用url参数传递长链接，接口返回短链接
+// @Tags url
+// @Accept application/json
+// @Produce application/json
+// @Param url query string false "string valid"
+// @Success 200 {string} string "短链接字符串"
+// @Failure 500 {string} string "insert mysql error"
+// @Router /shorten [get]
 func Shorten(c *gin.Context) {
 	url := c.Query("url")
 	shorten := RandStringRunes(6)
@@ -39,6 +48,16 @@ func RandStringRunes(n int) string {
 	return string(b)
 }
 
+// Expand godoc
+// @Summary 使用短链接
+// @Description 使用短链接跳转至原链接
+// @Tags url
+// @Accept application/json
+// @Produce application/json
+// @Param shorten path string true "短链接"
+// @Success 200 {string} string "短链接字符串"
+// @Failure 500 {string} string "get url error"
+// @Router /expand/{shorten} [get]
 func Expand(c *gin.Context) {
 	shorten := c.Param("shorten")
 	// 使用者访问短链，查短链映射长链，并重定向至长链
@@ -50,8 +69,22 @@ func Expand(c *gin.Context) {
 		})
 		return
 	}
-	//c.String(200, getUrl)
-	c.Redirect(http.StatusMovedPermanently, getUrl)
+	c.String(200, getUrl)
+	//c.Redirect(http.StatusMovedPermanently, getUrl)
 }
 
+// Print godoc
+// @Summary 打印最近的一条短链接
+// @Description
+// @Tags url
+// @Accept application/json
+// @Produce application/json
+// @Success 200 {string} string "打印短链接信息"
+// @Router /print [get]
+func Print(c *gin.Context) {
+	shorturl := dao.Print()
+	c.JSON(200, gin.H{
+		"message": shorturl,
+	})
+}
 
