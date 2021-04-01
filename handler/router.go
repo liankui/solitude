@@ -25,4 +25,5 @@ func (h *HttpServer) InitRouter() {
 	if err != nil {
 		log.Fatalf("router running error: %v", err)
 	}
+
 }
