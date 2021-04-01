@@ -1,0 +1,113 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "一个golang开发的短链接项目",
+        "title": "Solitude",
+        "termsOfService": "https://github.com/liankui/solitude",
+        "contact": {
+            "name": "Eric",
+            "url": "https://github.com/liankui"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:5555",
+    "paths": {
+        "/expand/{shorten}": {
+            "get": {
+                "description": "使用短链接跳转至原链接",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "url"
+                ],
+                "summary": "使用短链接",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "短链接",
+                        "name": "shorten",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "短链接字符串",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "get url error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/print": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "url"
+                ],
+                "summary": "打印最近的一条短链接",
+                "responses": {
+                    "200": {
+                        "description": "打印短链接信息",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/shorten": {
+            "get": {
+                "description": "使用url参数传递长链接，接口返回短链接",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "url"
+                ],
+                "summary": "返回短链",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "string valid",
+                        "name": "url",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "短链接字符串",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "insert mysql error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
