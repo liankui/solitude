@@ -9,7 +9,7 @@ networks:
 
 services:
   web:
-    image: golang:latest
+    image: golang:alpine3.12
     container_name: golang-demo
     volumes:
       - $GOPATH/src/github.com/liankui/solitude:/go/src
