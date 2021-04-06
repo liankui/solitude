@@ -24,7 +24,7 @@ services:
       - mysql
       - redis
   mysql:
-    image: mysql:latest
+    image: biarms/mysql:latest
     container_name: mysql-demo
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
     restart: always
