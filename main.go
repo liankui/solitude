@@ -25,7 +25,6 @@ func main() {
 	flag.Parse()
 	gin.SetMode(viper.GetString("GIN_MODE"))
 
-
 	config.InitCfg(*configPath)
 	dao.DB = dao.InitTestDB()
 	dao.Redis = dao.NewRedis()
